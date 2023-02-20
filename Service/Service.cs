@@ -1,34 +1,43 @@
-﻿namespace ServiceSms.Service
+﻿using System.Text.RegularExpressions;
+
+namespace ServiceSms.Service
 {
     public class Service
     {
 
         public interface ISmsService
         {
-            Task<string> SendSmsAsync(string to, string message);
+            Task<bool> SendSmsAsync(string to, string message);
         }
         public class GreekSmsService : ISmsService
         {
-            public async Task<string> SendSmsAsync(string to, string message)
+            public async Task<bool> SendSmsAsync(string to, string message)
             {
+                if(message.Length > 480 && Regex.IsMatch(message,"^[Α - Ωα - ω0 - 9] +$"))
+                return true;
+                return false;
 
-                return "SMS sent to Greek vendor";
             }
         }
 
         public class CyprusSmsService : ISmsService
         {
-            public async Task<string> SendSmsAsync(string to, string message)
+            public async Task<bool> SendSmsAsync(string to, string message)
             {
-                return "SMS sent to Cyprus vendor";
+                if (message.Length > 480)
+                    return true;
+                return false;
             }
         }
 
         public class OtherSmsService : ISmsService
         {
-            public async Task<string> SendSmsAsync(string to, string message)
+            public async Task<bool> SendSmsAsync(string to, string message)
             {
-                return "SMS sent to Other vendor";
+                if (message.Length > 480)
+                    return true;
+
+                return false;
             }
         }
 
