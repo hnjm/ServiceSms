@@ -13,7 +13,11 @@ public class VendorController : ControllerBase
 
     private readonly ISmsServiceFactory _smsServiceFactory;
     private readonly ISmsRepository _smsRepository;
-
+    Dictionary<TypeOfVendor, ISmsRepository> dictionary = new Dictionary<TypeOfVendor, ISmsRepository>() {
+              {TypeOfVendor.GR,new SmsVendorGR()},
+              {TypeOfVendor.CY,new SmsVendorCy()},
+              {TypeOfVendor.Other,new SmsVendorOther()}
+          };
     public VendorController(ISmsServiceFactory smsServiceFactory, ISmsRepository smsRepository)
     {
         _smsServiceFactory=smsServiceFactory;
@@ -24,7 +28,7 @@ public class VendorController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SendSmsAsync([FromBody] SmsRequest request)
     {
-        var smsService = _smsServiceFactory.GetSmsService(request.Vendor);
+       var smsService = _smsServiceFactory.GetSmsService(request.Vendor);
 
         if (smsService == null || request.Message.Length > 480)
         {
