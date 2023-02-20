@@ -18,7 +18,7 @@ namespace ServiceSms.Controllers
                 var newSms= new Sms()
                 {To = to,
                     Enno=1,
-                    Timestamp = DateTime.UtcNow() 
+                    Timestamp = DateTime.UtcNow
                  };
                 smsList.Add(newSms);
                 
@@ -45,7 +45,7 @@ namespace ServiceSms.Controllers
                 {
                     To = to,
                     Enno = (short)count++,
-                    Timestamp = DateTime.UtcNow()
+                    Timestamp = DateTime.UtcNow
                 };
                  smsList.Add(newSms);
             }
@@ -57,8 +57,17 @@ namespace ServiceSms.Controllers
     {
         public async Task<List<Sms>> ConvertSmsAsync(string to, string message)
         {
+            List<Sms> smsList = new List<Sms>();
+            var newSms = new Sms()
+            {
+                To = to,
+                Enno = 1,
+                Timestamp = DateTime.UtcNow
+            };
+            smsList.Add(newSms);
 
-            return null;
+            return smsList;
+            ;
         }
     }
 
