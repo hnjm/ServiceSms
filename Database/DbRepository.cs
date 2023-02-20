@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
+using ServiceSms.Model;
+
 namespace ServiceSms.Database
 {
     public class DbRepository
@@ -13,9 +15,8 @@ public interface IRepository<T>
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
-        Task<int> AddAsync(T entity);
-        Task<int> UpdateAsync(T entity);
-        Task<int> DeleteAsync(T entity);
+        void Add(List<Sms> sms);
+       
     }
 
     public class Repository<T> : IRepository<T>
@@ -39,23 +40,19 @@ public interface IRepository<T>
             return await _dbConnection.QueryFirstOrDefaultAsync<T>(sql, new { Id = id });
         }
 
-        public async Task<int> AddAsync(T entity)
+        public  void Add(List<Sms> sms)
         {
-            string sql = "INSERT INTO " + typeof(T).Name + " VALUES (@Name, @Age)";
-            return await _dbConnection.ExecuteAsync(sql, entity);
+            foreach (Sms smsItem in sms)
+            {
+                string sql = "INSERT INTO  VALUES (@Name, @Age)";
+                 _dbConnection.ExecuteAsync(sql, sms);
+            }
+            
         }
 
-        public async Task<int> UpdateAsync(T entity)
-        {
-            string sql = "UPDATE " + typeof(T).Name + " SET Name = @Name, Age = @Age WHERE Id = @Id";
-            return await _dbConnection.ExecuteAsync(sql, entity);
-        }
+       
 
-        public async Task<int> DeleteAsync(T entity)
-        {
-            string sql = "DELETE FROM " + typeof(T).Name + " WHERE Id = @Id";
-            return await _dbConnection.ExecuteAsync(sql, entity);
-        }
+       
     }
 
 }

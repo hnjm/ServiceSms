@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using static ServiceSms.Service.Service;
 
 namespace ServiceSms.Controllers
 {

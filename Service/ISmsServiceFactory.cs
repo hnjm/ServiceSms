@@ -2,7 +2,7 @@
 
 namespace ServiceSms.Controllers
 {
-    internal interface ISmsServiceFactory
+     public  interface ISmsServiceFactory
     {
         ISmsRepository GetSmsService(int vendor);
     }
@@ -15,9 +15,8 @@ namespace ServiceSms.Controllers
           };
         public ISmsRepository GetSmsService(int vendor)
         {
-            var _ = dictionary.TryGetValue((TypeOfVendor)vendor, out ISmsRepository service);
-
-            return service?? null;
+            //dictionary.TryGetValue((TypeOfVendor)vendor, out ISmsRepository service);
+            return null;
         }
     }
 }

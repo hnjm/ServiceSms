@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceSms.Model;
-using ServiceSms.Service;
 
 namespace ServiceSms.Controllers;
 
@@ -15,11 +14,11 @@ public class VendorController : ControllerBase
     private readonly ISmsServiceFactory _smsServiceFactory;
     private readonly ISmsRepository _smsRepository;
 
-    Dictionary<TypeOfVendor, ISmsRepository> dictionary = new Dictionary<TypeOfVendor, ISmsRepository>() {
-              {TypeOfVendor.GR,new SmsVendorGR()},
-              {TypeOfVendor.CY,new SmsVendorCy()},
-              {TypeOfVendor.Other,new SmsVendorOther()}
-          };
+    public VendorController(ISmsServiceFactory smsServiceFactory, ISmsRepository smsRepository)
+    {
+        _smsServiceFactory=smsServiceFactory;
+        _smsRepository  = smsRepository;
+    }
 
 
     [HttpPost]
@@ -30,8 +29,7 @@ public class VendorController : ControllerBase
         if (smsService == null || request.Message.Length > 480)
         {
             return BadRequest("Invalid message");
-        }
-        dictionary.TryGetValue((TypeOfVendor)request.Vendor, out ISmsRepository service);
+        }      
 
        
 
@@ -48,10 +46,5 @@ public class VendorController : ControllerBase
 
 
 
-    public class InternalSmsRequest
-    {
-        public string To { get; set; }
-        public string Message { get; set; }
-
-    }
+   
 }
