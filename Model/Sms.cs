@@ -13,4 +13,11 @@
         public string Message { get; set; }
         public int Vendor { get; set; }
     }
+    enum TypeOfVendor
+    {
+        GR = 1,
+        CY = 2,
+        Other = 3
+
+    };
 }
