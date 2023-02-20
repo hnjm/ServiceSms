@@ -31,7 +31,7 @@ public class VendorController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SendSmsAsync([FromBody] SmsRequest request)
     {
-        var smsService = _smsServiceFactory.GetSmsService(request.Vendor);
+        //var smsService = _smsServiceFactory.GetSmsService(request.Vendor);
 
         //if (smsService == null)
         //{

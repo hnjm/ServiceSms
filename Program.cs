@@ -1,3 +1,8 @@
+using ServiceSms.Database;
+using ServiceSms.Model;
+using System.Data;
+using System.Data.SqlClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +11,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IDbConnection>(sp => new SqlConnection("MyConnectionString"));
+builder.Services.AddTransient<IRepository<Sms>, Repository<Sms>>();
 
 var app = builder.Build();
 
