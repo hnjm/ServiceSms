@@ -11,15 +11,15 @@ namespace ServiceSms.Database
     }
  
 
-public interface IRepository<T>
+public interface IRepository
     {
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
+       // Task<IEnumerable<T>> GetAllAsync();
+       // Task<T> GetByIdAsync(int id);
         void Add(List<Sms> sms);
        
     }
 
-    public class Repository<T> : IRepository<T>
+    public class Repository : IRepository
     {
         private readonly IDbConnection _dbConnection;
 
@@ -28,17 +28,17 @@ public interface IRepository<T>
             _dbConnection = dbConnection;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            string sql = "SELECT * FROM Message";
-            return await _dbConnection.QueryAsync<T>(sql);
-        }
+        //public async Task<IEnumerable<T>> GetAllAsync()
+        //{
+        //    string sql = "SELECT * FROM Message";
+        //    return await _dbConnection.QueryAsync<T>(sql);
+        //}
 
-        public async Task<T> GetByIdAsync(int id)
-        {
-            string sql = "SELECT * FROM Message WHERE Id = @Id";
-            return await _dbConnection.QueryFirstOrDefaultAsync<T>(sql, new { Id = id });
-        }
+        //public async Task<T> GetByIdAsync(int id)
+        //{
+        //    string sql = "SELECT * FROM Message WHERE Id = @Id";
+        //    return await _dbConnection.QueryFirstOrDefaultAsync<T>(sql, new { Id = id });
+        //}
 
         public  void Add(List<Sms> sms)
         {

@@ -5,12 +5,12 @@ namespace ServiceSms.Controllers
 {
     public interface ISmsRepository
     {
-        Task<List<Sms>> ConvertSmsAsync(string to, string message);
+        List<Sms> ConvertSms(string to, string message);
 
     }
     public class SmsVendorGR : ISmsRepository
     {
-        public async Task<List<Sms>> ConvertSmsAsync(string to, string message)
+        public  List<Sms> ConvertSms(string to, string message)
         {
             if (Regex.Match(message, @"^[α-ωΑ-Ω]*").Success)
             {
@@ -32,7 +32,7 @@ namespace ServiceSms.Controllers
 
     public class SmsVendorCy : ISmsRepository
     {
-        public async Task<List<Sms>> ConvertSmsAsync(string to, string message)
+        public  List<Sms> ConvertSms(string to, string message)
         {
             int length = 160;
             List<Sms> smsList = new List<Sms>();
@@ -57,7 +57,7 @@ namespace ServiceSms.Controllers
 
     public class SmsVendorRest : ISmsRepository
     {
-        public async Task<List<Sms>> ConvertSmsAsync(string to, string message)
+        public  List<Sms> ConvertSms(string to, string message)
         {
             List<Sms> smsList = new List<Sms>();
             var newSms = new Sms()
