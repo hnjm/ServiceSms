@@ -8,16 +8,16 @@ namespace ServiceSms.Controllers
         List<Sms> ConvertSms(string to, string message);
 
     }
-    public class SmsVendorGR : ISmsRepository
+    public class SmsVendorGR : ISmsRepository//greek
     {
         public  List<Sms> ConvertSms(string to, string message)
         {
-            if (Regex.Match(message, @"^[α-ωΑ-Ω]*").Success)
+            if (Regex.Match(message, @"^[α-ωΑ-Ω]*").Success)//only greek and numbers
             {
                 List<Sms> smsList = new List<Sms>();
                 var newSms= new Sms()
                 {
-                    Id = to,
+                    Id = "jim",
                     SendTo = to,
 
                     NumOfLine = 1,
@@ -32,7 +32,7 @@ namespace ServiceSms.Controllers
         }
     }
 
-    public class SmsVendorCy : ISmsRepository
+    public class SmsVendorCy : ISmsRepository//cyprus
     {
         public  List<Sms> ConvertSms(string to, string message)
         {
@@ -45,7 +45,7 @@ namespace ServiceSms.Controllers
                 int currentLength = remainingLength < length ? remainingLength : length;
                 var newSms = new Sms()
                 {
-                    Id = "123",
+                    Id = "jim",
                     SendTo= to,
                     NumOfLine = count++,
                     RecTime = DateTime.UtcNow,
@@ -65,7 +65,7 @@ namespace ServiceSms.Controllers
             List<Sms> smsList = new List<Sms>();
             var newSms = new Sms()
             {
-                Id = to,
+                Id = "jim",
                 SendTo = to,
 
                 NumOfLine = 1,

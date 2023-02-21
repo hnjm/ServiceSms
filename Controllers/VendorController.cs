@@ -27,17 +27,14 @@ public class VendorController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SendSmsAsync([FromBody] SmsRequest request)
     {
-       var smsService = _smsServiceFactory.GetSmsService(request.Vendor);
+        //please send me back a feed back
+       var smsService = _smsServiceFactory.GetSmsService(request.Vendor);//not if 
         if (smsService == null || request.Message.Length > 480)
         {
             return BadRequest("Invalid message");
         }
        var ListOfSms= smsService.ConvertSms(request.To,request.Message);
-        _dbRepository.Add(ListOfSms);
-
-
-
-
+        _dbRepository.Add(ListOfSms);//dapper
         return Ok(true);
     }
 
