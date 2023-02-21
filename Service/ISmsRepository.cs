@@ -18,7 +18,9 @@ namespace ServiceSms.Controllers
                 var newSms= new Sms()
                 {
                     Id = to,
-                    NumOfLine=1,
+                    SendTo = to,
+
+                    NumOfLine = 1,
                     RecTime = DateTime.UtcNow,
                     MessageBody = message,
                 };
@@ -43,7 +45,8 @@ namespace ServiceSms.Controllers
                 int currentLength = remainingLength < length ? remainingLength : length;
                 var newSms = new Sms()
                 {
-                    Id = to,
+                    Id = "123",
+                    SendTo= to,
                     NumOfLine = count++,
                     RecTime = DateTime.UtcNow,
                     MessageBody= message.Substring(i, currentLength)
@@ -63,6 +66,8 @@ namespace ServiceSms.Controllers
             var newSms = new Sms()
             {
                 Id = to,
+                SendTo = to,
+
                 NumOfLine = 1,
                 RecTime = DateTime.UtcNow,
                 MessageBody = message
