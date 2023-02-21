@@ -34,7 +34,7 @@ public class VendorController : ControllerBase
             return BadRequest("Invalid message");
         }
        var ListOfSms= smsService.ConvertSms(request.To,request.Message);
-        _dbRepository.Add(ListOfSms);//dapper
+        _dbRepository.Send(ListOfSms);//dapper
         return Ok(true);
     }
 

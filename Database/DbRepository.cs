@@ -16,7 +16,7 @@ public interface IRepository
     {
        // Task<IEnumerable<T>> GetAllAsync();
        // Task<T> GetByIdAsync(int id);
-        void Add(List<Sms> sms);
+       Task<bool> Send(List<Sms> sms);
        
     }
 
@@ -41,22 +41,21 @@ public interface IRepository
         //    return await _dbConnection.QueryFirstOrDefaultAsync<T>(sql, new { Id = id });
         //}
 
-        public  void Add(List<Sms> sms)
+        public async  Task<bool> Send(List<Sms> sms)
         {
             using (var con = new SqlConnection("Data Source=(localdb)\\localdbdemo;Integrated Security=True"))
             {
                 //ID ,    SendTo ,	Vendor , NumOfLine , MessageBody ,	RecTime
                 {
+                    string sql = "INSERT INTO Message(ID, SendTo, RecTime, Vendor, NumOfLine, MessageBody)" +
+                           "VALUES(@ID,@SendTo,@RecTime ,@Vendor, @NumOfLine,@MessageBody)";
                     con.Open();
                     //var test = con.Query<Sms>("select * from Message");
                     foreach (Sms smsItem in sms)
-                    {
-                        string sql ="INSERT INTO Message(ID, SendTo, RecTime, Vendor, NumOfLine, MessageBody)"+
-                            "VALUES(@ID,@SendTo,@RecTime ,@Vendor, @NumOfLine,@MessageBody)";
-                   
+                    {                      
                         try
                         {
-                            int rowsAffected = con.Execute(sql, smsItem);
+                            int rowsAffected =await con.ExecuteAsync(sql, smsItem);
                         }
                         catch
                         {
@@ -65,6 +64,7 @@ public interface IRepository
                     }
                     con.Close();
                 }
+                return true ;
             }
         }
 
