@@ -16,10 +16,12 @@ namespace ServiceSms.Controllers
             {
                 List<Sms> smsList = new List<Sms>();
                 var newSms= new Sms()
-                {To = to,
-                    Enno=1,
-                    Timestamp = DateTime.UtcNow
-                 };
+                {
+                    Id = to,
+                    NumOfLine=1,
+                    RecTime = DateTime.UtcNow,
+                    MessageBody = message,
+                };
                 smsList.Add(newSms);
                 
                 return smsList;
@@ -33,19 +35,19 @@ namespace ServiceSms.Controllers
         public async Task<List<Sms>> ConvertSmsAsync(string to, string message)
         {
             int length = 160;
-            List<string> substrings = new List<string>();
             List<Sms> smsList = new List<Sms>();
-            int count =  1;
+            short count =  1;
             for (int i = 0; i < message.Length; i += length)
             {
                 int remainingLength = message.Length - i;
                 int currentLength = remainingLength < length ? remainingLength : length;
-                substrings.Add(message.Substring(i, currentLength));
                 var newSms = new Sms()
                 {
-                    To = to,
-                    Enno = (short)count++,
-                    Timestamp = DateTime.UtcNow
+                    Id = to,
+                    NumOfLine = count++,
+                    RecTime = DateTime.UtcNow,
+                    MessageBody= message.Substring(i, currentLength)
+
                 };
                  smsList.Add(newSms);
             }
@@ -53,16 +55,17 @@ namespace ServiceSms.Controllers
         }
     }
 
-    public class SmsVendorOther : ISmsRepository
+    public class SmsVendorRest : ISmsRepository
     {
         public async Task<List<Sms>> ConvertSmsAsync(string to, string message)
         {
             List<Sms> smsList = new List<Sms>();
             var newSms = new Sms()
             {
-                To = to,
-                Enno = 1,
-                Timestamp = DateTime.UtcNow
+                Id = to,
+                NumOfLine = 1,
+                RecTime = DateTime.UtcNow,
+                MessageBody = message
             };
             smsList.Add(newSms);
 

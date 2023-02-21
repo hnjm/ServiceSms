@@ -8,11 +8,15 @@ namespace ServiceSms.Controllers
     }
     public class SmsServiceFactory : ISmsServiceFactory
     {
-    
+        Dictionary<TypeOfVendor, ISmsRepository> dictionary = new Dictionary<TypeOfVendor, ISmsRepository>() {
+              {TypeOfVendor.GR,new SmsVendorGR()},
+              {TypeOfVendor.CY,new SmsVendorCy()},
+              {TypeOfVendor.Other,new SmsVendorRest()}
+          };
         public  ISmsRepository  GetSmsService(int vendor)
         {
-            //dictionary.TryGetValue((TypeOfVendor)vendor, out ISmsRepository service);
-            return null;
+            dictionary.TryGetValue((TypeOfVendor)vendor, out ISmsRepository service);
+            return service;
         }
     }
 }

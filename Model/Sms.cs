@@ -2,12 +2,16 @@
 {
     public class Sms
     {
-        public int Id { get; set; }
+        //ID ,    SendTo ,	Vendor , NumOfLine , MessageBody ,	RecTime
 
-        public string To { get; set; }
-        public string Message { get; set; }
-        public short Enno { get; set; }
-        public DateTime Timestamp { get; set; }
+        public string Id { get; set; }
+
+        public string SendTo { get; set; }
+        public string MessageBody { get; set; }
+
+        public short Vendor { get; set; }
+        public short NumOfLine { get; set; }
+        public DateTime RecTime { get; set; }
     }
     public class SmsRequest
     {

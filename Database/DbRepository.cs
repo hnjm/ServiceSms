@@ -42,9 +42,11 @@ public interface IRepository<T>
 
         public  void Add(List<Sms> sms)
         {
+            //ID ,    SendTo ,	Vendor , NumOfLine , MessageBody ,	RecTime
             foreach (Sms smsItem in sms)
             {
-                string sql = "INSERT INTO Message(To) VALUES (@smsItem., @Age)";
+                string sql = "INSERT INTO Message(ID,SendTo,Vendor,NumOfLine,MessageBody,RecTime) " +
+                    "VALUES (@smsItem.ID, @smsItem.SendTo, @smsItem.Vendor,@smsItem.NumOfLine,@smsItem.MessageBody,@smsItem.RecTime)";
                  _dbConnection.ExecuteAsync(sql, sms);
             }
             
