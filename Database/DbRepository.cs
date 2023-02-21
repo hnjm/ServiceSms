@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
 using ServiceSms.Model;
+using System.Data.SqlClient;
 
 namespace ServiceSms.Database
 {
@@ -42,14 +43,31 @@ public interface IRepository
 
         public  void Add(List<Sms> sms)
         {
-            //ID ,    SendTo ,	Vendor , NumOfLine , MessageBody ,	RecTime
-            foreach (Sms smsItem in sms)
+            using (var con = new SqlConnection("Data Source=(localdb)\\localdbdemo;Integrated Security=True"))
             {
-                string sql = "INSERT INTO Message(ID,SendTo,Vendor,NumOfLine,MessageBody,RecTime) " +
-                    "VALUES (@smsItem.ID, @smsItem.SendTo, @smsItem.Vendor,@smsItem.NumOfLine,@smsItem.MessageBody,@smsItem.RecTime)";
-                 _dbConnection.ExecuteAsync(sql, sms);
+                //ID ,    SendTo ,	Vendor , NumOfLine , MessageBody ,	RecTime
+                {
+                    con.Open();
+                    var tt = con.Query<Sms>("select * from Message");
+                    foreach (Sms smsItem in sms)
+                    {
+                        string sql ="INSERT INTO Message(ID, SendTo, RecTime, Vendor, NumOfLine, MessageBody)"+
+                            "VALUES(@ID,@SendTo, @RecTime,@RecTime , @Vendor, @NumOfLine,@MessageBody)";
+                        //"INSERT INTO Message(ID=\'2\',SendTo=\'3\',MessageBody=@frfrf,RecTime=\'02/02/23') ";// +
+                        // "VALUES (2, 3, 3,3,ccdcd,01/01/2023)";
+                        try
+                        {
+                            con.Execute(sql, smsItem);
+                        }
+                        catch
+                        {
+                            var c = 0;
+                        }
+                        tt = con.Query<Sms>("select * from Message");
+                    }
+                    con.Close();
+                }
             }
-            
         }
 
        

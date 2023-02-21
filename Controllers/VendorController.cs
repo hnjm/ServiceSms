@@ -16,10 +16,11 @@ public class VendorController : ControllerBase
     private readonly ISmsRepository _smsRepository;
     private readonly IRepository _dbRepository;
 
-    public VendorController(ISmsServiceFactory smsServiceFactory, ISmsRepository smsRepository)
+    public VendorController(ISmsServiceFactory smsServiceFactory, ISmsRepository smsRepository, IRepository rep)
     {
         _smsServiceFactory=smsServiceFactory;
         _smsRepository  = smsRepository;
+        _dbRepository = rep;    
     }
 
 
@@ -27,12 +28,12 @@ public class VendorController : ControllerBase
     public async Task<IActionResult> SendSmsAsync([FromBody] SmsRequest request)
     {
        var smsService = _smsServiceFactory.GetSmsService(request.Vendor);
-       var takis= smsService.ConvertSmsAsync(request.To,request.Message);
         if (smsService == null || request.Message.Length > 480)
         {
             return BadRequest("Invalid message");
         }
-        _dbRepository.Add(takis);
+       var ListOfSms= smsService.ConvertSms(request.To,request.Message);
+        _dbRepository.Add(ListOfSms);
 
 
 
