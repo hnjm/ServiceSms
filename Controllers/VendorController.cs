@@ -28,7 +28,7 @@ public class VendorController : ControllerBase
     public async Task<IActionResult> SendSmsAsync([FromBody] SmsRequest request)
     {
         //please send me back a feed back
-       var smsService = _smsServiceFactory.GetSmsService(request.Vendor);//not if 
+       var smsService = _smsServiceFactory.GetSmsService(request.Vendor);//not if ocp
         if (smsService == null || request.Message.Length > 480)
         {
             return BadRequest("Invalid message");
