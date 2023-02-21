@@ -30,13 +30,13 @@ public interface IRepository<T>
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            string sql = "SELECT * FROM " + typeof(T).Name;
+            string sql = "SELECT * FROM Message";
             return await _dbConnection.QueryAsync<T>(sql);
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            string sql = "SELECT * FROM " + typeof(T).Name + " WHERE Id = @Id";
+            string sql = "SELECT * FROM Message WHERE Id = @Id";
             return await _dbConnection.QueryFirstOrDefaultAsync<T>(sql, new { Id = id });
         }
 
@@ -44,7 +44,7 @@ public interface IRepository<T>
         {
             foreach (Sms smsItem in sms)
             {
-                string sql = "INSERT INTO  VALUES (@Name, @Age)";
+                string sql = "INSERT INTO Message(To) VALUES (@smsItem., @Age)";
                  _dbConnection.ExecuteAsync(sql, sms);
             }
             
